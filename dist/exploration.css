@@ -1,0 +1,102 @@
+/* Programme time and exploration are intentionally separate. */
+:root{--hud-height:103px;--timeline-height:84px}
+.programme-timeline{position:fixed;z-index:29;top:var(--hud-height);left:0;right:0;padding:13px 3.5vw 12px;background:#141c18f7;border-bottom:1px solid #d1c69d30;backdrop-filter:blur(14px)}
+.booting .programme-timeline,.inside .programme-timeline{visibility:hidden}
+.timeline-stages{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.timeline-stage{position:relative;padding:0 0 9px;border-bottom:2px solid #bbc4b428;color:#b9c2b1;font:12px/1.4 var(--mono)}
+.timeline-stage.active{color:#ffb88f;border-color:var(--orange)}
+.timeline-stage.active:before{content:'◆ ';font-size:10px}
+.timeline-caption{display:flex;justify-content:space-between;gap:15px;margin-top:8px;font:12px/1.4 var(--mono);color:#e8d8b9}
+.timeline-context{color:#aebda8;text-align:right}
+.world-intro{top:calc(var(--hud-height) + var(--timeline-height) + 35px)}
+.house>img,.house:nth-child(3n)>img,.house:nth-child(3n+2)>img{filter:drop-shadow(10px 16px 5px #0006)}
+.house:hover>img,.house.nearest>img{filter:drop-shadow(0 0 18px #fba64a50) drop-shadow(10px 16px 5px #0006)}
+.house[data-kind=mentors]>img,.house[data-kind=alumni]>img{height:220px}
+.player-gear{position:absolute;inset:0;z-index:4;pointer-events:none}
+.player-gear img{position:absolute;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(2px 4px 2px #10181288)}
+.equipped-toolkit{width:38px;height:39px;right:-18px;bottom:12px}
+.equipped-backpack{width:38px;height:46px;left:-14px;top:48px}
+.equipped-badge{width:31px;height:33px;right:-16px;top:20px}
+.player.riding .equipped-toolkit{bottom:8px;right:-30px}.player.riding .equipped-backpack{left:-22px;top:72px}
+.room{--room-header-height:92px;--room-timeline-height:44px}
+.room-top{background:#141b16f2;backdrop-filter:blur(12px)}
+.room-level{font:14px/1.4 var(--mono);white-space:nowrap;color:#ffb88f}
+.room-timeline{position:absolute;top:var(--room-header-height);left:0;right:0;padding:12px 3.5vw;background:#172219f2;border-bottom:1px solid #c4b79630;color:#dbcaa8;font:12px/1.5 var(--mono);z-index:4}
+.room-scroll{top:calc(var(--room-header-height) + var(--room-timeline-height));scroll-padding-top:24px}
+.house-snapshot{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin:28px 0 35px;padding:23px 0;border-block:1px solid #c7bb9c38}
+.house-snapshot dt{font:12px/1.5 var(--mono);text-transform:uppercase;letter-spacing:.04em;color:#d9a67f}
+.house-snapshot dd{margin:10px 0 0;font-size:16px;line-height:1.5;color:#efe9d9}
+.welcome-host{display:grid;grid-template-columns:220px 1fr;align-items:center;gap:28px;margin:15px 0 40px}
+.welcome-host>img{width:100%;height:200px;object-fit:contain;image-rendering:pixelated}
+.welcome-host>.comic-bubble{font-size:17px;line-height:1.6}
+.room-exploration{margin-top:38px}
+.room-exploration>.eyebrow{color:#e1ae7e}
+.room-exploration>h3{font-size:32px;font-weight:500;line-height:1.18;letter-spacing:-.035em;margin:12px 0 13px;max-width:660px}
+.room-exploration>.exploration-instruction{font-size:16px;line-height:1.6;color:#bdc8b3}
+.room-exploration-status{font:12px/1.5 var(--mono);color:#f0bd8c;margin:18px 0 20px}
+.room-objects{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+.room-object{display:flex;flex-direction:column;align-items:center;gap:10px;min-width:0;padding:21px 16px 20px;text-align:center;background:#293326;border:1px solid #a38e6759;box-shadow:0 5px 0 #080e09;transition:transform .2s,border-color .2s,background .2s}
+.room-object:hover,.room-object[aria-expanded=true]{transform:translateY(-4px);background:#39412a;border-color:#efa361}
+.room-object.discovered{border-bottom:3px solid #92ad79}
+.room-object .object-art{height:166px;width:100%;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(3px 10px 5px #04090477);margin-bottom:6px}
+.room-object>strong{font-size:18px;line-height:1.25;font-weight:500;color:#fff0d2}
+.object-copy{font-size:14px;line-height:1.45;color:#c5cdb9}
+.object-reward{margin-top:auto;padding-top:8px;font:12px/1.5 var(--mono);color:#ffbc8d}
+.discovered .object-reward{color:#b7d399}
+.discovery-panel{margin-top:28px;padding:30px;background:#101c13;border:1px solid #d79a5f;box-shadow:0 14px 36px #0004;scroll-margin-top:20px}
+.discovery-panel[hidden]{display:none}
+.discovery-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding-bottom:22px;border-bottom:1px solid #c8ac7838}
+.discovery-top h3{font-size:28px;line-height:1.25;letter-spacing:-.03em;font-weight:500}
+.close-discovery{padding:10px 12px;flex-shrink:0;background:#2a392a;border:1px solid #8fa08060;font:13px/1.4 var(--mono)}
+.discovery-panel .room-features{margin-top:15px}.discovery-panel>.discovery-lead{font-size:18px;padding-top:24px}
+.discovery-panel .reception-scene{margin-top:28px}.discovery-panel .desk-board{padding:24px}.discovery-panel .overview-grid{grid-template-columns:repeat(3,1fr)}
+.discovery-panel>h4{font-size:21px;font-weight:500;margin:25px 0 10px;color:#ebbe8c}
+.discovery-list{padding-left:21px;font-size:16px;line-height:1.7}.discovery-list li{margin:9px 0}
+.complete-house-details{margin-top:35px!important;border-top:1px solid #c7bb9c38}
+.room-content .complete-house-details>summary{padding:22px 0;font-size:16px;color:#d5c8aa}
+.pathway-compare,.execution-choice{padding:28px;background:#111d14ee;border:1px solid #c2b18a4a;margin:26px 0}
+.pathway-compare>.eyebrow,.execution-choice>.eyebrow{color:#e9b381;font-size:12px;line-height:1.6;letter-spacing:.025em}
+.pathway-compare>h3,.execution-choice>h3{font-size:28px;letter-spacing:-.025em;font-weight:500;line-height:1.2;margin-top:12px}
+.pathway-compare .table-wrap{margin-top:23px}.pathway-compare th:nth-child(2){color:#ffbf83}.pathway-compare th:nth-child(3){color:#bfdee3}
+.build-choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:25px}
+.build-choice{padding:22px;text-align:left;display:flex;flex-direction:column;gap:12px;background:#1c2a20;border:1px solid #c2bc9b55}
+.build-choice[aria-pressed=true]{background:#313421;border-color:#f19358}
+.build-choice>strong{font-size:21px;font-weight:500;line-height:1.25}.build-choice>span{font-size:16px;line-height:1.6;color:#ced2bc}
+.build-choice[aria-pressed=true]>strong:after{content:' ✓';color:#ffbf83}
+.build-choice-summary{font:13px/1.6 var(--mono);color:#dcb88c;margin-top:18px}
+.room[data-kind=pathway] .house-snapshot,.room[data-kind=pathway] .room-exploration,.room[data-kind=pathway] .complete-house-details{background:#111b13ed;padding:26px}
+.room[data-kind=pathway] .house-snapshot{padding:23px 26px}
+.room[data-kind=pathway] .complete-house-details{margin-top:24px!important}
+.exploration-map-summary{margin:24px 0;padding:24px 0;border-block:1px solid #ccb78a35}
+.exploration-map-summary>strong{font:18px/1.3 var(--mono);color:#ffb687}
+.exploration-map-summary>p{font-size:15px;line-height:1.6;margin-top:14px;color:#c4ccb9}
+.exploration-map-summary>small{display:block;font-size:12px;line-height:1.6;color:#b5c1ab;margin-top:18px}
+.gear-unlocks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-top:24px}
+.gear-unlock{display:flex;align-items:center;flex-direction:column;gap:8px;text-align:center;min-width:0;padding:13px 8px;background:#283426}
+.gear-unlock>img{width:70px;height:77px;object-fit:contain;filter:grayscale(1);opacity:.5;image-rendering:pixelated}
+.gear-unlock.unlocked>img{filter:none;opacity:1}.gear-unlock>strong{font-size:14px;line-height:1.4;font-weight:500}.gear-unlock>span{font:12px/1.5 var(--mono);color:#b6c3a5}.gear-unlock.unlocked>span{color:#ffbe89}
+.map-stop{grid-template-columns:30px 1fr 58px}.map-symbol{font-size:12px!important;white-space:nowrap;text-align:right}
+.exploration-toast{position:fixed;bottom:72px;left:50%;transform:translate(-50%,16px);z-index:300;max-width:calc(100% - 32px);width:max-content;padding:14px 21px;background:#edd9aa;color:#182517;box-shadow:0 5px 0 #070e09;font:14px/1.5 var(--mono);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .18s,transform .18s,visibility .18s}
+.exploration-toast.visible{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.finish-explore{padding:14px 20px;margin:23px auto 0;background:#32402b;border:1px solid #9ca58080;font:14px/1.5 var(--mono);color:#ecd8b2}.finish-explore[hidden]{display:none}
+@media(max-width:950px){.welcome-host{grid-template-columns:180px 1fr;gap:20px}.room-object .object-art{height:135px}.room-object{padding:18px 12px}.room-level{font-size:12px}.room-tools{gap:9px}.timeline-caption{font-size:11px}.timeline-context{display:none}}
+@media(max-width:650px){
+ .programme-timeline{padding:11px 18px 10px}.timeline-stages{gap:8px}.timeline-stage{font-size:11px;padding-bottom:8px}.timeline-stage.active:before{content:''}.timeline-stage.active{font-weight:bold}.timeline-caption{font-size:11px;min-height:30px;align-items:center;margin-top:5px}
+ .world-intro{top:calc(var(--hud-height) + var(--timeline-height) + 23px)}.world-intro h1{font-size:94px}.world-intro>p{font-size:21px}.world-intro .start-note{font-size:12px}
+ .house[data-kind=mentors]>img,.house[data-kind=alumni]>img{height:130px}
+ .equipped-toolkit{width:27px;height:29px;right:-10px;bottom:7px}.equipped-backpack{width:27px;height:34px;left:-10px;top:33px}.equipped-badge{width:23px;height:25px;right:-10px;top:9px}
+ .player.riding .equipped-toolkit{right:-22px}.player.riding .equipped-backpack{left:-14px;top:51px}
+ .room{--room-header-height:100px;--room-timeline-height:54px}.room-top{gap:8px}.room-tools{flex-wrap:wrap;gap:8px}.room-level{margin-right:auto;font-size:12px}.room-tools>.sound-toggle{font-size:12px;padding:9px;min-height:40px}.room-tools>.exit-button{font-size:12px;min-height:40px;padding:10px}
+ .room-timeline{padding:9px 16px;font-size:11px;line-height:1.5}.room-scroll{padding:14px 13px 44px}
+ .house-snapshot{grid-template-columns:1fr;gap:17px;padding:22px 0;margin:24px 0}.house-snapshot>div{display:grid;grid-template-columns:82px 1fr;gap:12px}.house-snapshot dt{font-size:11px}.house-snapshot dd{font-size:15px;margin:0}
+ .welcome-host{display:flex;flex-direction:column;gap:12px;margin-bottom:28px}.welcome-host>img{height:174px;width:200px}.welcome-host>.comic-bubble{font-size:16px}
+ .room-exploration{margin-top:30px}.room-exploration>h3{font-size:27px}.room-exploration>.exploration-instruction{font-size:15px}.room-exploration-status{font-size:11px;line-height:1.6}
+ .room-objects{grid-template-columns:1fr;gap:15px}.room-object{display:grid;grid-template-columns:90px 1fr;gap:7px 14px;text-align:left;align-items:center;padding:16px}.room-object .object-art{grid-row:1 / 4;height:109px;width:90px;margin:0}.room-object>strong{font-size:18px}.object-copy{font-size:14px}.object-reward{font-size:12px;padding-top:0;margin:0}
+ .discovery-panel{padding:21px 16px;margin-inline:-7px}.discovery-top{gap:12px;padding-bottom:18px}.discovery-top h3{font-size:24px}.close-discovery{font-size:12px;padding:10px;min-height:40px}.discovery-panel .desk-board{padding:18px 12px}.discovery-panel .overview-grid{grid-template-columns:repeat(2,1fr)}
+ .pathway-compare,.execution-choice{padding:23px 17px}.pathway-compare>h3,.execution-choice>h3{font-size:26px}.build-choice-grid{grid-template-columns:1fr;gap:12px;margin-top:20px}.build-choice{padding:19px}.build-choice>strong{font-size:20px}.build-choice>span{font-size:15px}
+ .room[data-kind=pathway] .house-snapshot,.room[data-kind=pathway] .room-exploration,.room[data-kind=pathway] .complete-house-details{padding:23px 17px}.room[data-kind=pathway] .room-exploration .room-object{grid-template-columns:82px 1fr;padding:13px;gap:7px 11px}.room[data-kind=pathway] .room-object .object-art{width:82px}
+ .map-stop{grid-template-columns:23px 1fr 54px}.gear-unlocks{gap:8px}.gear-unlock{padding:11px 6px}.gear-unlock>strong{font-size:13px}.gear-unlock>span{font-size:11px}.gear-unlock>img{width:53px;height:61px}
+ .exploration-toast{font-size:12px;bottom:55px;padding:12px 15px}.finish-explore{font-size:13px;max-width:100%}
+}
+@media(prefers-reduced-motion:reduce){.room-object,.exploration-toast{transition:none}}
+.reduced-motion .room-object,.reduced-motion .exploration-toast{transition:none}
