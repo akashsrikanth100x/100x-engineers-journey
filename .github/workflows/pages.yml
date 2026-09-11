@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'dist/**'
+      - 'index.html'
+      - '.nojekyll'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
@@ -35,3 +37,46 @@ jobs:
       - name: Deploy website
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Verify published village and assets
+        env:
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          python3 - <<'PY'
+          import os, time, urllib.request, urllib.parse
+          from html.parser import HTMLParser
+          class Resources(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.paths = []
+              def handle_starttag(self, tag, attrs):
+                  a = dict(attrs)
+                  if tag == 'script' and a.get('src'):
+                      self.paths.append(a['src'])
+                  if tag == 'link' and a.get('rel') in ('stylesheet', 'icon'):
+                      self.paths.append(a['href'])
+          base = os.environ['SITE_URL']
+          def get(url):
+              with urllib.request.urlopen(url, timeout=30) as response:
+                  return response.read()
+          for attempt in range(12):
+              try:
+                  html = get(base + '?deployment=' + os.environ['GITHUB_SHA']).decode()
+                  page = base
+                  if 'url=./dist/' in html:
+                      page = urllib.parse.urljoin(base, './dist/')
+                      html = get(page).decode()
+                  assert 'id="power-screen"' in html, 'Published homepage is not the pixel village'
+                  assert 'id="health-fill"' in html, 'Village exploration UI missing'
+                  parser = Resources()
+                  parser.feed(html)
+                  for path in parser.paths + ['assets/engineer-walk.webp', 'assets/hut-welcome.webp']:
+                      data = get(urllib.parse.urljoin(page, path))
+                      assert data == open('dist/' + path, 'rb').read(), 'Asset mismatch: ' + path
+                  print('PASS: Published pixel village, all entry scripts/styles, avatar and welcome hut match the repository.')
+                  break
+              except Exception as error:
+                  print('Waiting for deployment:', error, flush=True)
+                  if attempt == 11:
+                      raise
+                  time.sleep(10)
+          PY
